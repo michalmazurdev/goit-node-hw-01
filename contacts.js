@@ -7,21 +7,6 @@ import * as readline from "readline";
 //  Skomentuj i zapisz wartość
 export const contactsPath = path.resolve("db", "contacts.json");
 
-// const readContactsFile = async (path) => {
-//   try {
-//     const contactsJson = await readFile(path);
-//     const contacts = JSON.parse(contactsJson);
-//     // console.log(contacts);
-//     return contacts;
-//   } catch (err) {
-//     console.error("Error reading contacts from file: ", err);
-//     throw new Error(err);
-//   }
-// };
-// const contacts = readContactsFile(contactsPath);
-// console.log(contacts);
-// console.log(typeof contacts);
-
 // TODO: udokumentuj każdą funkcję
 const listContacts = async () => {
   try {
