@@ -1,23 +1,25 @@
 import path from "path";
-import fs from "fs";
+// import fs from "fs";
 import { readFile, writeFile, readdir } from "node:fs/promises";
-// import { nanoid } from "nanoid";
+import { nanoid } from "nanoid";
 import * as readline from "readline";
 
-//  Skomentuj i zapisz wartość
+//  Path to db folder where contacts.json is stored
 export const contactsPath = path.resolve("db", "contacts.json");
 
-// TODO: udokumentuj każdą funkcję
+// Display all the contacts
 const listContacts = async () => {
   try {
     const contactsJson = await readFile(contactsPath);
     const contacts = JSON.parse(contactsJson);
     console.table(contacts);
   } catch {
-    console.log("There was an error while retrieving the contact list.");
+    console.log("An error occured while performing requested task.");
   }
 };
-// listContacts();
+listContacts();
+
+//display specifiic contact by ID
 const getContactById = async (contactId) => {
   try {
     const contactsJson = await readFile(contactsPath);
@@ -25,18 +27,58 @@ const getContactById = async (contactId) => {
     const requestedContact = contacts.find(
       (contact) => contact.id === contactId
     );
-    console.log(JSON.stringify(requestedContact));
+    requestedContact === undefined
+      ? console.log(
+          "We are sorry, there is no contact matching the ID that you provided"
+        )
+      : console.log(JSON.stringify(requestedContact));
   } catch {
-    console.log(
-      "We are sorry, we could not find a contact matching provided ID"
-    );
+    console.log("An error occured while performing requested task.");
   }
 };
-getContactById("AeHIrLTr6JkxGE6SN-0Rw");
-function removeContact(contactId) {
-  // ...twój kod
-}
+// getContactById("AeHIrLTr6JkxGE6SN-0Rw");
 
-function addContact(name, email, phone) {
-  // ...twój kod
-}
+const removeContact = async (contactId) => {
+  try {
+    const contactsJson = await readFile(contactsPath);
+    const contacts = JSON.parse(contactsJson);
+    const index = contacts.findIndex((contact) => contact.id === contactId);
+    // const requestedContact = contacts.find(
+    //   (contact) => contact.id === contactId
+    // );
+    if (index !== -1) {
+      contacts.splice(index, 1);
+      await writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+      console.log("Requested contact is now removed.");
+    } else {
+      console.log("Contact you wish to remove does not exist");
+    }
+  } catch {
+    console.log("An error occured while performing requested task.");
+  }
+};
+// removeContact("ZbomC_BydR7M8qcGT7X5C");
+
+const addContact = async (name, email, phone) => {
+  try {
+    const contactsJson = await readFile(contactsPath);
+    const contacts = JSON.parse(contactsJson);
+    const emailList = contacts.map((contact) => contact.email);
+    if (emailList.includes(email)) {
+      console.log("Contact with this email adfdress is alredy saved");
+      return;
+    }
+    const newContact = {
+      id: nanoid(),
+      name,
+      email,
+      phone,
+    };
+    contacts.push(newContact);
+    await writeFile(contactsPath, JSON.stringify(contacts, null, 2));
+    console.log("Contact has been added");
+  } catch {
+    console.log("An error occured while performing requested task.");
+  }
+};
+// addContact("Michal Mazur", "m.mazur40@gmial.com", "123-53-53");
