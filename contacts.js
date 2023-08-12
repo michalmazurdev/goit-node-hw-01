@@ -1,14 +1,12 @@
 import path from "path";
-// import fs from "fs";
 import { readFile, writeFile, readdir } from "node:fs/promises";
 import { nanoid } from "nanoid";
-import * as readline from "readline";
 
 //  Path to db folder where contacts.json is stored
-export const contactsPath = path.resolve("db", "contacts.json");
+const contactsPath = path.resolve("db", "contacts.json");
 
 // Display all the contacts
-const listContacts = async () => {
+export const listContacts = async () => {
   try {
     const contactsJson = await readFile(contactsPath);
     const contacts = JSON.parse(contactsJson);
@@ -17,10 +15,10 @@ const listContacts = async () => {
     console.log("An error occured while performing requested task.");
   }
 };
-listContacts();
+// listContacts();
 
 //display specifiic contact by ID
-const getContactById = async (contactId) => {
+export const getContactById = async (contactId) => {
   try {
     const contactsJson = await readFile(contactsPath);
     const contacts = JSON.parse(contactsJson);
@@ -38,7 +36,7 @@ const getContactById = async (contactId) => {
 };
 // getContactById("AeHIrLTr6JkxGE6SN-0Rw");
 
-const removeContact = async (contactId) => {
+export const removeContact = async (contactId) => {
   try {
     const contactsJson = await readFile(contactsPath);
     const contacts = JSON.parse(contactsJson);
@@ -59,7 +57,7 @@ const removeContact = async (contactId) => {
 };
 // removeContact("ZbomC_BydR7M8qcGT7X5C");
 
-const addContact = async (name, email, phone) => {
+export const addContact = async (name, email, phone) => {
   try {
     const contactsJson = await readFile(contactsPath);
     const contacts = JSON.parse(contactsJson);

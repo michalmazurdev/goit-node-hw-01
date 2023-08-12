@@ -1,4 +1,10 @@
-// import { contactsPath } from "./contacts.js";
+// const contacts = require("./contacts");
+import {
+  listContacts,
+  getContactById,
+  addContact,
+  removeContact,
+} from "./contacts.js";
 import * as fs from "fs";
 import { Command } from "commander";
 import path from "path";
@@ -15,28 +21,27 @@ program.parse(process.argv);
 
 const argv = program.opts();
 
-// TODO: refaktor
-function invokeAction({ action, id, name, email, phone }) {
+const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
     case "list":
-      // ...
+      await listContacts();
       break;
 
     case "get":
-      // ... id
+      await getContactById(id);
       break;
 
     case "add":
-      // ... name email phone
+      await addContact(name, email, phone);
       break;
 
     case "remove":
-      // ... id
+      await removeContact(id);
       break;
 
     default:
       console.warn("\x1B[31m Unknown action type!");
   }
-}
+};
 
 invokeAction(argv);
