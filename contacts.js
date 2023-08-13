@@ -1,5 +1,5 @@
 import path from "path";
-import { readFile, writeFile, readdir } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { nanoid } from "nanoid";
 
 //  Path to db folder where contacts.json is stored
@@ -25,11 +25,13 @@ export const getContactById = async (contactId) => {
     const requestedContact = contacts.find(
       (contact) => contact.id === contactId
     );
-    requestedContact === undefined
+    requestedContact === undefined //checking if contact exists
       ? console.log(
           "We are sorry, there is no contact matching the ID that you provided"
         )
-      : console.log(JSON.stringify(requestedContact));
+      : console.log(
+          `Name: ${requestedContact.name}, email: ${requestedContact.email}, phone: ${requestedContact.phone} `
+        );
   } catch {
     console.log("An error occured while performing requested task.");
   }
@@ -41,9 +43,6 @@ export const removeContact = async (contactId) => {
     const contactsJson = await readFile(contactsPath);
     const contacts = JSON.parse(contactsJson);
     const index = contacts.findIndex((contact) => contact.id === contactId);
-    // const requestedContact = contacts.find(
-    //   (contact) => contact.id === contactId
-    // );
     if (index !== -1) {
       contacts.splice(index, 1);
       await writeFile(contactsPath, JSON.stringify(contacts, null, 2));
@@ -63,6 +62,7 @@ export const addContact = async (name, email, phone) => {
     const contacts = JSON.parse(contactsJson);
     const emailList = contacts.map((contact) => contact.email);
     if (emailList.includes(email)) {
+      //chekcing if contact with given email is not in db already
       console.log("Contact with this email adfdress is alredy saved");
       return;
     }
