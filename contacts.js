@@ -15,7 +15,6 @@ export const listContacts = async () => {
     console.log("An error occured while performing requested task.");
   }
 };
-// listContacts();
 
 //display specifiic contact by ID
 export const getContactById = async (contactId) => {
@@ -36,7 +35,6 @@ export const getContactById = async (contactId) => {
     console.log("An error occured while performing requested task.");
   }
 };
-// getContactById("AeHIrLTr6JkxGE6SN-0Rw");
 
 export const removeContact = async (contactId) => {
   try {
@@ -56,7 +54,6 @@ export const removeContact = async (contactId) => {
     console.log("An error occured while performing requested task.");
   }
 };
-// removeContact("ZbomC_BydR7M8qcGT7X5C");
 
 export const addContact = async (name, email, phone) => {
   try {
@@ -83,4 +80,3 @@ export const addContact = async (name, email, phone) => {
     console.log("An error occured while performing requested task.");
   }
 };
-// addContact("Michal Mazur", "m.mazur40@gmial.com", "123-53-53");

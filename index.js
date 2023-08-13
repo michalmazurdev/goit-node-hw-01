@@ -1,13 +1,10 @@
-// const contacts = require("./contacts");
 import {
   listContacts,
   getContactById,
   addContact,
   removeContact,
 } from "./contacts.js";
-import * as fs from "fs";
 import { Command } from "commander";
-import path from "path";
 
 const program = new Command();
 program
