@@ -44,9 +44,11 @@ export const removeContact = async (contactId) => {
     const contacts = JSON.parse(contactsJson);
     const index = contacts.findIndex((contact) => contact.id === contactId);
     if (index !== -1) {
-      contacts.splice(index, 1);
+      const removedContact = contacts.splice(index, 1);
       await writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-      console.log("Requested contact is now removed.");
+      console.log(
+        `${removedContact[0].name} is now removed from contacts list.`
+      );
     } else {
       console.log("Contact you wish to remove does not exist");
     }
@@ -63,7 +65,9 @@ export const addContact = async (name, email, phone) => {
     const emailList = contacts.map((contact) => contact.email);
     if (emailList.includes(email)) {
       //chekcing if contact with given email is not in db already
-      console.log("Contact with this email adfdress is alredy saved");
+      console.log(
+        `Contact with email address ${email} address is alredy saved in contacts list.`
+      );
       return;
     }
     const newContact = {
@@ -74,7 +78,7 @@ export const addContact = async (name, email, phone) => {
     };
     contacts.push(newContact);
     await writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-    console.log("Contact has been added");
+    console.log(`${newContact.name} has been added to contacts list.`);
   } catch {
     console.log("An error occured while performing requested task.");
   }
